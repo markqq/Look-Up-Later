@@ -17,7 +17,7 @@ jQuery.fn.highlight = function(pat) {
    }
   }
   else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
-   for (var i = 0; i < node.childNodes.length; ++i) {
+   for (var i = 0; i < node.childNodes.length; ++i){
     i += innerHighlight(node.childNodes[i], pat);
    }
   }
@@ -55,11 +55,11 @@ jQuery.fn.removeHighlight = function() {
 };
 var lul_getSelectedText = function(){
     if(window.getSelection){
-       return window.getSelection().toString();
+        return window.getSelection().toString();
     }else if(document.getSelection){
-       return document.getSelection();
+        return document.getSelection();
     }else if(document.selection){
-       return document.selection.createRange().text;
+        return document.selection.createRange().text;
     }
 };
 var lul_setColor = function(){
@@ -103,17 +103,46 @@ var lul_addVocabulary = function(selectedText){
         }
     });
 };
-window.onmousedown = function(){
-    //lul_setColor();
+window.onmousedown = function(e){
+    isText = 1;
+    e = e || window.event;
+    var target = e.target || e.srcElement;
+    if(target.contentEditable=="true"||target.contentEditable=="contentEditable"||target.contentEditable==true){
+        isText = 0;
+        return;
+    }
+    if(target.nodeType!=1 && target.nodeType!=3){
+        isText = 0;
+        return;
+    }
+    switch(target.type){
+        case "text":
+        case "password":
+        case "email":
+        case "number":
+        case "button":
+        case "submit":
+            isText = 0;
+            return;
+            break;
+    }
+    switch(target.nodeName){
+        case "INPUT":
+        case "BUTTOM":
+        case "IMG":
+        case "VIDEO":
+        case "AUDIO":
+        case "PRE":
+        case "CODE":
+        case "CANVAS":
+            isText = 0;
+            return;
+            break;
+    }
     window.onmouseup = function(){
         var selectedText = lul_getSelectedText();
-        if(selectedText.indexOf(" ")>=0){
-            selectedText = '';
-        }
-        if(selectedText.indexOf("\r")>=0){
-            selectedText = '';
-        }
-        if(selectedText.indexOf("\n")>=0){
+        console.log(selectedText.charCodeAt);
+        if(isText==0 || selectedText.indexOf(" ")>=0 || selectedText.indexOf("\r")>=0 || selectedText.indexOf("\n")>=0 || selectedText.length<=1){
             selectedText = '';
         }
         var reg = /[\u4E00-\u9FA5]/g;
