@@ -176,8 +176,6 @@ Using [Pace.js](http://github.hubspot.com/pace/)
 
 ![](https://ws3.sinaimg.cn/large/006tNc79gy1fih3tg5znkj30nc0ven08.jpg)
 
-> [View on github](https://github.com/markqq/Look-Up-Later)
-> 
 > [Download .crx](https://tan90.co/Projects/LookUpLater.crx)
 > 
 > How to Install: Open `chrome://extensions/` and drag the .crx file into the browser
