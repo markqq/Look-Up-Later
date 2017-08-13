@@ -103,6 +103,16 @@ var lul_addVocabulary = function(selectedText){
         }
     });
 };
+var lul_highlight = function(){
+    chrome.storage.sync.get("vocabulary",function(data){
+        if(data.vocabulary!=""&&typeof(data.vocabulary)!=undefined&&data.vocabulary!=undefined){
+            var a = data.vocabulary.split("||");
+            for(i=0;i<a.length;i++){
+                $('body').highlight(a[i]);
+            }
+        }
+    });
+};
 window.onmousedown = function(e){
     isText = 1;
     e = e || window.event;
@@ -159,3 +169,6 @@ window.onmousedown = function(e){
         }
     };
 };
+$(document).ready(function(){
+    lul_highlight();
+});
